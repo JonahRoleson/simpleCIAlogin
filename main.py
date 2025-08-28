@@ -1,4 +1,4 @@
-from flask import Flask, request, session, jsonify, abort
+from flask import Flask, request, session, jsonify, abort, render_template, redirect, url_for
 from functools import wraps
 
 app = Flask(__name__)
@@ -29,6 +29,11 @@ def requires_role(required_role):
     return decorator
 
 # Routes
+
+@app.get("/")
+def index():
+    return render_template("index.html", user=current_user())
+
 @app.get("/login")
 def login():
     username = request.args.get("username", "").strip().lower()

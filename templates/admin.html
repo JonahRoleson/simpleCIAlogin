@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Admin - Flask Role Demo{% endblock %}
+{% block content %}
+	<h1>Admin Area</h1>
+	<p>Only <strong>admin</strong> can view this page.</p>
+	<div class="panel">
+		<h3>System Metrics (example)</h3>
+		<ul>
+			<li>Active users: 2</li>
+			<li>Uptime: 42 minutes</li>
+			<li>Build: Demo-1.0.0</li>
+		</ul>
+	</div>
+{% endblock %}

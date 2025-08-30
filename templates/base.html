@@ -14,7 +14,7 @@
 			<a href="{{ url_for('user_only') }}">User</a>
 			{% if user %}
 				<span class="pill">Logged in: {{ user.username }} ({{ user.role }})</span>
-				<form class="inline" method="post" action="{{ url_for('logout') }}">
+				<form class="inline" method="post" action="{{ url_for('logout')}}">
 					<button type="submit" class="btn">Logout</button>
 				</form>
 			{% else %}

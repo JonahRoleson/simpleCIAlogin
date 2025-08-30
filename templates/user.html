@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}User - Flask Role Demo{% endblock %}
+{% block content %}
+	<h1>User Dashboard</h1>
+	<p>Only <strong>regular users</strong> can view this page.</p>
+	<div class="panel">
+		<h3>Your stuff</h3>
+		<ul>
+			<li> Welcome back!</li>
+			<li> Demo Notifcations: 3</li>
+			<li> Todo Items: 1</li>
+		</ul>
+	</div>
+{% endblock %}

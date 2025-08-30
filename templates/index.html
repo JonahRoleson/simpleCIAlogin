@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Home - Flask Role Demo{% endblock %}
+{% block title %}Home Flask Role Demo{% endblock %}
 {% block content %}
 	<h1>Welcome</h1>
 	<p>This demo shows basic role-based pages with simple buttons and CSS.</p>
@@ -8,8 +8,8 @@
 			<h2>Login as Admin</h2>
 			<p>Simulate an admin session (username: <code>jonah</code>).</p>
 			<form method="post" action="{{ url_for('login') }}">
-				<input type="hidden" name="username" value="jonah">
-				<button class="btn">Login as Admin</button>
+			<input type="hidden" name="username" value="jonah">
+			<button class="btn">Login as Admin</button>
 			</form>
 		</div>
 		<div class="card">

@@ -21,7 +21,7 @@ def requires_role(required_role):
         def wrapper(*args, **kwargs):
             user = current_user()
             if user is None:
-                abort(401)
+                return redirect(url_for("index"))
             if user["role"] != required_role:
                 abort(403)
             return fn(*args, **kwargs)
@@ -34,20 +34,30 @@ def requires_role(required_role):
 def index():
     return render_template("index.html", user=current_user())
 
-@app.get("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    username = request.args.get("username", "").strip().lower()
+    username = request.form.get("username") if request.method == "POST" else request.args.get("username")
+    username = (username or "").strip().lower()
     if username not in USERS:
-        abort(400)
+        return redirect(url_for("index"))
     session["username"] = username
     session["role"] = USERS[username]["role"]
-    return jsonify({"message": "logged in", "user": current_user()})
+    return redirect(url_for("index"))
 
 @app.post("/logout")
-@app.get("/logout/")
 def logout():
     session.clear()
-    return jsonify({"message": "logged out"})
+    return redirect(url_for("index"))
+
+@app.get("/admin-only")
+@requires_role("admin")
+def admin_only():
+    return render_template("admin.html", user=current_user())
+
+@app.get("/user-only")
+@requires_role("user")
+def user_only():
+     return render_template("user.html", user=current_user())
 
 @app.get("/whoami")
 def whoami():
@@ -55,22 +65,6 @@ def whoami():
     if not user:
         return jsonify({"authenticated": False}), 200
     return jsonify({"authenticated": True, "user": user}), 200
-
-@app.get("/admin-only")
-@requires_role("admin")
-def admin_only():
-    return jsonify({
-        "endpoint": "admin-only",
-        "data": "Highly privileged administrative info"
-    })
-
-@app.get("/user-only")
-@requires_role("user")
-def user_only():
-    return jsonify({
-        "endpoint": "user-only",
-        "data": "Welcome to your user dashboard"
-    })
 
 @app.get("/health")
 def health():
